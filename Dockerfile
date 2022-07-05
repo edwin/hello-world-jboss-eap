@@ -7,7 +7,8 @@ COPY drivers/*.jar $JBOSS_HOME/standalone/deployments/
 COPY standalone-openshift.xml $JBOSS_HOME/standalone/configuration/standalone-openshift.xml
 
 USER root
-RUN chown jboss:jboss -R $JBOSS_HOME/standalone/deployments/ $JBOSS_HOME/standalone/configuration/
-USER jboss
+RUN chgrp -R 0 $JBOSS_HOME/standalone/deployments/  && \
+    chmod -R g=u $JBOSS_HOME/standalone/deployments/
+USER 185
 
 EXPOSE 8080
